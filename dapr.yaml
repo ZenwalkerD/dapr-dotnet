@@ -1,0 +1,21 @@
+# dapr run -f .
+
+version: 1
+common: # optional section for variables shared across apps
+  env: # any environment variable shared across apps
+    ASPNETCORE_ENVIRONMENT: Development
+apps:
+  - appID: webapp # optional
+    appDirPath: ./FrontEndApi/ # REQUIRED
+    appProtocol: http
+    appPort: 8080
+    command: ["dotnet", "run", "--project", "WebApi-Dapr.csproj", "--urls", "http://localhost:5000"]
+    daprdLogDestination: console
+    enableApiLogging: true
+    logLevel: debug
+    resourcesPaths: [../.components]
+  - appID: backendapi # optional
+    appDirPath: ./BackendAPI/ # REQUIRED
+    appProtocol: http
+    appPort: 8080
+    command: ["dotnet", "run", "--project", "BackendAPI.csproj","--urls", "http://localhost:5001"]
